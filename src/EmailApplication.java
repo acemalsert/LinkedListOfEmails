@@ -37,29 +37,24 @@ public class EmailApplication {
             String input = scan.nextLine();
 
             String[] parameters = input.split(" ", 2);
-            switch (parameters[0]) {
-
-                case "Q": {
-                    isContinue = false;
-                    break;
-                }
-
-                case "N":
-
-                    String[] emailInfo = parameters[1].split("//");
-                    Email email = new Email(emailInfo[1],emailInfo[3],Integer.parseInt(emailInfo[2]),Integer.parseInt(emailInfo[4]));
-                    INBOX.addEmail(email);
-                    break;
 
 
-                case "R": {
+                if(parameters[0].equals("Q")) isContinue = false;
+
+                else if(parameters[0].equals("N")){
+                String[] emailInfo = parameters[1].split("//");
+                Email email = new Email(emailInfo[1], emailInfo[3], Integer.parseInt(emailInfo[2]), Integer.parseInt(emailInfo[4]));
+                INBOX.addEmail(email);
+            }
+
+
+                else if(parameters[0].equals("R")) {
                     int ID = Integer.parseInt(parameters[1]);
                     INBOX.read(ID);
-                    break;
                 }
 
 
-                case "A": {
+                else if(parameters[0].equals("A")){
                     int ID = Integer.parseInt(parameters[1]);
                     Email archived = INBOX.delete(ID);
                     if (archived != null) {
@@ -68,94 +63,53 @@ public class EmailApplication {
                     } else {
                         System.out.println("Email with given ID couldn't archived\n");
                     }
-                    break;
                 }
 
-                case "D": {
+                else if(parameters[0].equals("D")) {
                     int ID = Integer.parseInt(parameters[1]);
                     Email deletedEmail = INBOX.delete(ID);
                     TRASH.addEmail(deletedEmail);
-                    break;
                 }
 
 
-                case "S": {
+                else if(parameters[0].equals("S")) {
                     String folder = parameters[1];
-                    switch (folder) {
-                        case "Inbox": {
-                            System.out.print(INBOX);
-                            break;
-                        }
+                    if(folder.equals("Inbox")) System.out.print(INBOX);
 
-                        case "Archive": {
-                            System.out.print(ARCHIVE);
-                            break;
-                        }
+                    else if(folder.equals("Archive")) System.out.print(ARCHIVE);
 
-                        case "Trash": {
-                            System.out.print(TRASH);
-                            break;
-                        }
+                    else if(folder.equals("Trash")) System.out.print(TRASH);
 
-                        default:
-                            System.out.println("Such folder does not exists.");
-                            break;
-                    }
+                    else System.out.println("Such folder does not exists.");
 
-                    break;
                 }
 
 
-                case "U": {
+                else if(parameters[0].equals("U")) {
                     String folder = parameters[1];
-                    switch (folder) {
-                        case "Inbox": {
-                            INBOX.showAll(false);
-                            break;
-                        }
 
-                        case "Archive": {
-                            ARCHIVE.showAll(false);
-                            break;
-                        }
+                        if(folder.equals("Inbox")) INBOX.showAll(false);
 
-                        case "Trash": {
-                            TRASH.showAll(false);
-                            break;
-                        }
+                        else if(folder.equals("Archive")) ARCHIVE.showAll(false);
 
-                        default:
-                            System.out.println("Such folder does not exists.");
-                            break;
-                    }
+                        else if(folder.equals("Trash")) TRASH.showAll(false);
 
-                    break;
+                        else System.out.println("Such folder does not exists.");
+
                 }
 
-                case "C":
+                else if(parameters[0].equals("C")){
                     String folder = parameters[1];
-                    switch (folder) {
-                        case "Inbox": {
-                            System.out.println(INBOX.clearFolder(TRASH));
-                            break;
-                        }
 
-                        case "Archive": {
-                            System.out.println(ARCHIVE.clearFolder(TRASH));
-                            break;
-                        }
+                    if(folder.equals("Inbox")) System.out.println(INBOX.clearFolder(TRASH));
 
-                        case "Trash": {
-                            System.out.println(TRASH.clearFolder(null));
-                            break;
-                        }
+                    else if(folder.equals("Archive"))  System.out.println(ARCHIVE.clearFolder(TRASH));
 
-                        default:
-                            System.out.println("Such folder does not exist.");
-                            break;
-                    }
+                    else if(folder.equals("Trash")) System.out.println(TRASH.clearFolder(null));
 
-                    break;
+                    else System.out.println("Such folder does not exist.");
+
+
             }
         }
         scan.close();
