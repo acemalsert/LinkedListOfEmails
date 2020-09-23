@@ -108,8 +108,7 @@ public class EmailApplication {
                     else if(folder.equals("Trash")) System.out.println(TRASH.clearFolder(null));
 
                     else System.out.println("Such folder does not exist.");
-
-
+                    
             }
         }
         scan.close();
